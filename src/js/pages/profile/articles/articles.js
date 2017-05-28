@@ -1,0 +1,64 @@
+import React, {Component} from 'react';
+import PropTypes from 'prop-types';
+import {Link} from 'crizmas-router';
+import classNames from 'classnames';
+
+import ArticlePreview from 'js/components/article-preview';
+import Pagination from 'js/components/pagination';
+
+export default class Articles extends Component {
+  constructor() {
+    super();
+
+    this.setFollowed = () => {
+      this.props.controller.setFollowed();
+    };
+  }
+
+  render() {
+    const {username, selectedTab, tabs, articles, pending, articleController,
+      articlesOffset, articlesLimit, totalArticlesCount, getPageArticles} = this.props.controller;
+
+    return <div className="container">
+      <div className="row">
+        <div className="col-xs-12 col-md-10 offset-md-1">
+          <div className="articles-toggle">
+            <ul className="nav nav-pills outline-active">
+              <li className="nav-item">
+                <Link
+                  className={classNames('nav-link', {active: selectedTab === tabs.own})}
+                  to={`/@${encodeURIComponent(username)}`}>My Articles</Link>
+              </li>
+              <li className="nav-item">
+                <Link
+                  className={classNames('nav-link', {active: selectedTab === tabs.favorite})}
+                  to={`/@${encodeURIComponent(username)}/favorites`}>
+                  Favorited Articles
+                </Link>
+              </li>
+            </ul>
+          </div>
+
+          {articles && (articles.length
+            ? articles.map((article, i) => <ArticlePreview
+              key={i}
+              article={article}
+              controller={articleController} />)
+            : <div className="article-preview">No articles are here... yet.</div>)}
+
+          {pending.has('getArticles') && <div className="article-preview">Loading articles...</div>}
+
+          <Pagination
+            totalItemsCount={totalArticlesCount}
+            offset={articlesOffset}
+            itemsPerPage={articlesLimit}
+            onChange={getPageArticles} />
+        </div>
+      </div>
+    </div>;
+  }
+}
+
+Articles.propTypes = {
+  controller: PropTypes.object.isRequired
+};

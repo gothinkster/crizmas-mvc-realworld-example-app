@@ -1,0 +1,15 @@
+@keyframes spin{0%{opacity:0;}50%{opacity:1;}100%{transform:rotate(360deg);opacity:0;}}
+
+.transition-overlay{position:fixed;top:0;left:0;right:0;bottom:0;background:rgba(255,255,255,0.5);
+  z-index:99999;}
+.transition-overlay::after{content:'';position:fixed;top:0;left:0;right:0;bottom:0;width:3px;
+  height:80px;background:#000;margin:auto;transform-origin:50%;
+  animation:spin 2s linear infinite;}
+
+.crizmas-input > span{padding:0 1.5rem;color:#B85C5C;display:inline-block;}
+.crizmas-input > span > span{display:block;}
+.crizmas-input.has-errors > input{border-color:#B85C5C;}
+
+.navbar .nav .nav-link.is-active,.navbar .nav .nav-link.is-descendant-active{color:rgba(0,0,0,0.8);}
+/* don't show home as active if child is active */
+.navbar .nav .nav-item:first-child .is-descendant-active{color:rgba(0,0,0,0.3);}

@@ -1,0 +1,36 @@
+{
+  "author": {
+    "name": "Raul-Sebastian Mihăilă",
+    "email": "raul.mihaila@gmail.com"
+  },
+  "private": true,
+  "scripts": {
+    "start": "NODE_ENV=development webpack-dev-server",
+    "build": "NODE_ENV=production webpack --progress"
+  },
+  "dependencies": {
+    "babel-core": "^6.9.0",
+    "babel-loader": "^6.2.4",
+    "babel-plugin-transform-runtime": "^6.9.0",
+    "babel-preset-es2015": "^6.24.1",
+    "babel-preset-es2017": "^6.24.1",
+    "babel-preset-react": "^6.5.0",
+    "classnames": "^2.2.5",
+    "clean-webpack-plugin": "^0.1.16",
+    "copy-webpack-plugin": "^4.0.1",
+    "crizmas-async-utils": "^0.2.3",
+    "crizmas-components": "^0.3.1",
+    "crizmas-form": "^0.2.8",
+    "crizmas-mvc": "^0.2.7",
+    "crizmas-promise-queue": "^0.2.4",
+    "crizmas-router": "^0.2.8",
+    "crizmas-utils": "^0.2.2",
+    "html-webpack-plugin": "^2.17.0",
+    "markdown": "^0.5.0",
+    "prop-types": "^15.5.10",
+    "react": "^15.5.4",
+    "react-dom": "^15.5.4",
+    "webpack": "^1.13.1",
+    "webpack-dev-server": "^1.14.1"
+  }
+}
