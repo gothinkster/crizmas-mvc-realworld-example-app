@@ -79,6 +79,10 @@ export default Mvc.controller(function ArticleController() {
   };
 
   ctrl.postComment = (comment) => {
+    if (!currentUser.isAuthenticated) {
+      return router.transitionTo('/register');
+    }
+
     return articleApi.postComment({slug: ctrl.article.slug, comment}).then(({comment}) => {
       ctrl.comments.unshift(comment);
       ctrl.form.clear();
