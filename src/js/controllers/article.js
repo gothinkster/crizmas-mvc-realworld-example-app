@@ -7,7 +7,9 @@ import router from 'js/router';
 export default Mvc.controller({
   setFavorite: (article) => {
     if (!currentUser.isAuthenticated) {
-      return router.transitionTo('/register');
+      router.transitionTo('/register');
+
+      return Promise.reject(new Error('The user is not authenticated'));
     }
 
     return articleApi.setFavorite({slug: article.slug, isFavorite: !article.favorited})

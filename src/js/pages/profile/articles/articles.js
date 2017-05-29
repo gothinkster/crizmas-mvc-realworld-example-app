@@ -43,7 +43,7 @@ export default class Articles extends Component {
             ? articles.map((article, i) => <ArticlePreview
               key={i}
               article={article}
-              controller={articleController} />)
+              articleController={articleController} />)
             : <div className="article-preview">No articles are here... yet.</div>)}
 
           {pending.has('getArticles') && <div className="article-preview">Loading articles...</div>}

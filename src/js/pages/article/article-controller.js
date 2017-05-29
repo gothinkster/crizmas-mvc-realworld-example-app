@@ -27,10 +27,11 @@ export default Mvc.controller(function ArticleController() {
       init,
 
       () => {
-      router.transitionTo('/');
+        router.transitionTo('/');
 
-      return false;
-    });
+        return false;
+      }
+    );
   };
 
   const init = () => {

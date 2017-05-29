@@ -16,7 +16,7 @@ export default class ArticlePreview extends Component {
 
     this.setFavorite = () => {
       this.setState({isFavoritePending: true});
-      this.props.controller.setFavorite(this.props.article).then(() => {
+      this.props.articleController.setFavorite(this.props.article).then(() => {
         this.setState({isFavoritePending: false});
       });
     };
@@ -50,5 +50,5 @@ export default class ArticlePreview extends Component {
 
 ArticlePreview.propTypes = {
   article: PropTypes.object.isRequired,
-  controller: PropTypes.object.isRequired
+  articleController: PropTypes.object.isRequired
 };
