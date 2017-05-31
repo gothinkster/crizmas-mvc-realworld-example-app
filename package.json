@@ -23,7 +23,7 @@
     "crizmas-form": "^0.2.8",
     "crizmas-mvc": "^0.2.7",
     "crizmas-promise-queue": "^0.2.4",
-    "crizmas-router": "^0.2.8",
+    "crizmas-router": "^0.2.9",
     "crizmas-utils": "^0.2.2",
     "html-webpack-plugin": "^2.17.0",
     "markdown": "^0.5.0",
