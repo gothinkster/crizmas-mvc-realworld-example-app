@@ -33,7 +33,7 @@ If you want to change the API URL to a local server, simply edit `src/js/http.js
 
 ## Functionality overview
 
-The example application is a social blogging site (i.e. a Medium.com clone) called "Conduit". It uses a custom API for all requests, including authentication. You can view a live demo over at [here](https://raulsebastianmihaila.github.io/crizmas-mvc-realworld-site/).
+The example application is a social blogging site (i.e. a Medium.com clone) called "Conduit". It uses a custom API for all requests, including authentication. You can view a live demo [here](https://raulsebastianmihaila.github.io/crizmas-mvc-realworld-site/).
 
 **General functionality:**
 
