@@ -135,13 +135,13 @@ export default class Article extends Component {
               </div>
               <div className="card-footer">
                 <Link
-                  to={`/@${encodeURIComponent(article.author.username)}`}
+                  to={`/@${encodeURIComponent(comment.author.username)}`}
                   className="comment-author">
                   <img src={comment.author.image} className="comment-author-img" />
                 </Link>
                 &nbsp;&nbsp;
                 <Link
-                  to={`/@${encodeURIComponent(article.author.username)}`}
+                  to={`/@${encodeURIComponent(comment.author.username)}`}
                   className="comment-author">{comment.author.username}</Link>
                 <span className="date-posted">{longDate(comment.createdAt)}</span>
                 {comment.author.username === currentUser.username && <span className="mod-options">
