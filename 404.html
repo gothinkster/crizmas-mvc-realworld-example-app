@@ -6,9 +6,15 @@
   var modernBrowserUrl = 'https://raulsebastianmihaila.github.io/modern-browser-alert/';
   function getRedirectUrl() {
     var pathname = location.pathname;
+    var secondSlashIndex = pathname.indexOf('/', 1);
+    var path = pathname.slice(secondSlashIndex);
+    // include ending slash because otherwise 404 is returned
+    var basePath = pathname.slice(0, secondSlashIndex + 1);
+    var isTarget = basePath === '/crizmas-mvc-realworld-example-app/';
+
     var url = new URL(location);
-    url.pathname = '/';
-    url.searchParams.set('path', pathname);
+    url.pathname = isTarget ? basePath : '/';
+    url.searchParams.set('path', isTarget ? path : pathname);
     return url;
   }
   function redirect(url) {
