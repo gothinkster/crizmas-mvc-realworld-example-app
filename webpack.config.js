@@ -92,7 +92,7 @@ function getProdConfig() {
   Object.assign(config, {
     output: {
       filename: '[name].bundle-[hash].js',
-      publicPath: '/crizmas-mvc-realworld-site/',
+      publicPath: '/',
       path: 'dist'
     },
   });
@@ -102,7 +102,7 @@ function getProdConfig() {
       template: 'src/index.html',
       filename: 'index.html',
       favicon: 'src/img/favicon.ico',
-      assetsPrefix: '/crizmas-mvc-realworld-site'
+      assetsPrefix: ''
     }),
     new UglifyJsPlugin({
       compress: {
@@ -116,7 +116,7 @@ function getProdConfig() {
     new DefinePlugin({
       'process.env': {
         NODE_ENV: JSON.stringify('production'),
-        basePath: JSON.stringify('crizmas-mvc-realworld-site')
+        basePath: JSON.stringify(null)
       }
     })
   );
