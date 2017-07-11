@@ -44,6 +44,7 @@ export default class Login extends Component {
                   type="password"
                   placeholder="Password"
                   disabled={isPending}
+                  debounce={0}
                   {...form.get('password')} />
               </fieldset>
               <button

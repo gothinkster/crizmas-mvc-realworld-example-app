@@ -3,6 +3,7 @@ import Mvc from 'crizmas-mvc';
 import * as articleApi from 'js/api/article';
 import * as tagsApi from 'js/api/tags';
 import {currentUser} from 'js/models/user';
+import {Article} from 'js/models/article';
 import articleController from 'js/controllers/article';
 
 const tabs = {
@@ -34,26 +35,26 @@ export default Mvc.controller(function HomeController() {
 
   ctrl.getArticles = () => {
     const getArticlesFunc = ctrl.selectedTab === tabs.own
-      ? ctrl.getOwnFeed
+      ? getOwnFeed
       : ctrl.selectedTab === tabs.global
-        ? ctrl.getGlobalFeed
-        : ctrl.getTagsFeed;
+        ? getGlobalFeed
+        : getTagsFeed;
 
     return getArticlesFunc().then(({articles, articlesCount}) => {
-      ctrl.articles = articles;
+      ctrl.articles = articles.map((articleData) => new Article(articleData));
       ctrl.totalArticlesCount = articlesCount;
     });
   };
 
-  ctrl.getGlobalFeed = () => {
-    return articleApi.getGlobalFeed({offset: ctrl.articlesOffset, limit: ctrl.articlesLimit});
-  };
-
-  ctrl.getOwnFeed = () => {
+  const getOwnFeed = () => {
     return articleApi.getOwnFeed({offset: ctrl.articlesOffset, limit: ctrl.articlesLimit});
   };
 
-  ctrl.getTagsFeed = () => {
+  const getGlobalFeed = () => {
+    return articleApi.getGlobalFeed({offset: ctrl.articlesOffset, limit: ctrl.articlesLimit});
+  };
+
+  const getTagsFeed = () => {
     return articleApi.getTagFeed({
       offset: ctrl.articlesOffset,
       limit: ctrl.articlesLimit,

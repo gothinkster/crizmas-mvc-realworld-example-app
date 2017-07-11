@@ -3,6 +3,7 @@ import Form, {validation} from 'crizmas-form';
 
 import router from 'js/router';
 import {currentUser} from 'js/models/user';
+import {Article} from 'js/models/article';
 import * as articleApi from 'js/api/article';
 
 export default Mvc.controller(function EditorController() {
@@ -63,7 +64,7 @@ export default Mvc.controller(function EditorController() {
         },
         {
           name: 'tagList',
-          initialValue: ctrl.article && ctrl.article.tagList
+          initialValue: ctrl.article && ctrl.article.tagList || []
         }
       ],
 
@@ -88,7 +89,7 @@ export default Mvc.controller(function EditorController() {
 
   ctrl.getArticle = (slug) => {
     return articleApi.getArticle({slug}).then(({article}) => {
-      ctrl.article = article;
+      ctrl.article = new Article(article);
     });
   };
 
@@ -112,20 +113,17 @@ export default Mvc.controller(function EditorController() {
 
   ctrl.updateTagList = () => {
     const tagsListInput = ctrl.form.get('tagList');
+    const existingTagsList = tagsListInput.getValue();
     const tagsStringInput = ctrl.form.get('tagString');
     const result = tagsStringInput.getResult();
     const newTagsList = result && result.split(',')
       .map((tag) => tag.trim())
-      .filter((tag) => tag);
+      .filter((tag) => tag && !existingTagsList.includes(tag));
 
     tagsStringInput.clear();
 
     if (newTagsList && newTagsList.length) {
-      const existingTagsList = tagsListInput.getValue();
-
-      tagsListInput.onChange(existingTagsList
-        ? existingTagsList.concat(newTagsList)
-        : newTagsList);
+      tagsListInput.onChange(existingTagsList.concat(newTagsList));
     }
   };
 

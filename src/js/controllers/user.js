@@ -4,6 +4,7 @@ import {validation} from 'crizmas-form';
 import {setAuthToken, removeAuthToken} from 'js/http';
 import {currentUser, User} from 'js/models/user';
 import * as userApi from 'js/api/user';
+import router from 'js/router';
 
 export const usernameValidator = validation.validate(User.validateUsername);
 
@@ -37,6 +38,21 @@ export default Mvc.controller({
   update: ({username, email, password, image, bio}) => {
     return userApi.update({username, email, password, image, bio}).then(() => {
       currentUser.update({username, email, image, bio});
+    });
+  },
+
+  setFollowing: (user) => {
+    if (!currentUser.isAuthenticated) {
+      router.transitionTo('/register');
+
+      return Promise.reject(new Error('The user is not authenticated'));
+    }
+
+    return userApi.setFollowing({
+      username: user.username,
+      follow: !user.following
+    }).then(({profile}) => {
+      user.setFollowing(profile.following);
     });
   },
 

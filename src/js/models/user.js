@@ -1,10 +1,10 @@
-export function User() {
+export function User(userData = {}) {
   const user = {
-    isAuthenticated: false,
-    username: null,
-    email: null,
-    bio: null,
-    image: null
+    username: userData.username,
+    email: userData.email,
+    bio: userData.bio,
+    image: userData.image,
+    following: Boolean(userData.following)
   };
 
   user.update = ({username, email, bio, image}) => {
@@ -14,10 +14,8 @@ export function User() {
     currentUser.image = image;
   };
 
-  user.updateAuthenticated = ({username, email, bio, image}) => {
-    currentUser.isAuthenticated = true;
-
-    currentUser.update({username, email, bio, image});
+  user.setFollowing = (following) => {
+    user.following = following;
   };
 
   return user;
@@ -37,7 +35,21 @@ User.validatePassword = (password) => {
 
 User.logout = () => {
   currentUser.isAuthenticated = false;
-  currentUser = new User();
+  currentUser = new CurrentUser();
 };
 
-export let currentUser = new User();
+function CurrentUser() {
+  const user = new User();
+
+  user.isAuthenticated = false;
+
+  user.updateAuthenticated = ({username, email, bio, image}) => {
+    user.isAuthenticated = true;
+
+    user.update({username, email, bio, image});
+  };
+
+  return user;
+}
+
+export let currentUser = new CurrentUser();

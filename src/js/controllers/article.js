@@ -14,8 +14,7 @@ export default Mvc.controller({
 
     return articleApi.setFavorite({slug: article.slug, isFavorite: !article.favorited})
       .then((result) => {
-        article.favorited = result.article.favorited;
-        article.favoritesCount = result.article.favoritesCount;
+        article.setFavorite(result.article);
       });
   }
 });

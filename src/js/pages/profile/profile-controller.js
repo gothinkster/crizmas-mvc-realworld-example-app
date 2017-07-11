@@ -2,7 +2,8 @@ import Mvc from 'crizmas-mvc';
 
 import router from 'js/router';
 import * as userApi from 'js/api/user';
-import {currentUser} from 'js/models/user';
+import {currentUser, User} from 'js/models/user';
+import userController from 'js/controllers/user';
 
 export default Mvc.controller(function ProfileController() {
   const ctrl = {
@@ -35,21 +36,12 @@ export default Mvc.controller(function ProfileController() {
 
   ctrl.getProfile = () => {
     return userApi.getProfile({username: ctrl.username}).then(({profile}) => {
-      ctrl.profile = profile;
+      ctrl.profile = new User(profile);
     });
   };
 
-  ctrl.setFollowed = () => {
-    if (!currentUser.isAuthenticated) {
-      return router.transitionTo('/register');
-    }
-
-    return userApi.setFollowed({
-      username: ctrl.username,
-      follow: !ctrl.profile.following
-    }).then(({profile}) => {
-      ctrl.profile.following = profile.following;
-    });
+  ctrl.setFollowing = () => {
+    return userController.setFollowing(ctrl.profile);
   };
 
   return ctrl;

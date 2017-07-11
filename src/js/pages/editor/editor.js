@@ -66,7 +66,7 @@ export default class Editor extends Component {
                     disabled={isPending}
                     {...form.get('tagString')}
                     inputProps={{onKeyPress: this.onTagStringKeyPress}} />
-                  {tagList && !!tagList.length && <div className="tag-list">
+                  {!!tagList.length && <div className="tag-list">
                     {tagList.map((tag, i) => <span
                       key={i}
                       className="tag-default tag-pill">

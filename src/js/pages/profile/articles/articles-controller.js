@@ -1,6 +1,7 @@
 import Mvc from 'crizmas-mvc';
 
 import * as articleApi from 'js/api/article';
+import {Article} from 'js/models/article';
 import articleController from 'js/controllers/article';
 
 const tabs = {
@@ -31,16 +32,16 @@ export default Mvc.controller(function ArticlesController() {
 
   ctrl.getArticles = () => {
     const getArticlesFunc = ctrl.selectedTab === tabs.own
-      ? ctrl.getOwnArticles
-      : ctrl.getFavoriteArticles;
+      ? getOwnArticles
+      : getFavoriteArticles;
 
     return getArticlesFunc().then(({articles, articlesCount}) => {
-      ctrl.articles = articles;
+      ctrl.articles = articles.map((articleData) => new Article(articleData));
       ctrl.totalArticlesCount = articlesCount;
     });
   };
 
-  ctrl.getOwnArticles = () => {
+  const getOwnArticles = () => {
     return articleApi.getOwnArticles({
       author: ctrl.username,
       offset: ctrl.articlesOffset,
@@ -48,7 +49,7 @@ export default Mvc.controller(function ArticlesController() {
     });
   };
 
-  ctrl.getFavoriteArticles = () => {
+  const getFavoriteArticles = () => {
     return articleApi.getFavoriteArticles({
       favorited: ctrl.username,
       offset: ctrl.articlesOffset,

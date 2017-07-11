@@ -4,13 +4,14 @@ import Form from 'crizmas-form';
 import * as articleApi from 'js/api/article';
 import * as userApi from 'js/api/user';
 import {currentUser} from 'js/models/user';
+import {Article} from 'js/models/article';
 import router from 'js/router';
+import userController from 'js/controllers/user';
 import articleController from 'js/controllers/article';
 
 export default Mvc.controller(function ArticleController() {
   const ctrl = {
     article: null,
-    comments: null,
     currentUser,
     form: null
   };
@@ -46,13 +47,13 @@ export default Mvc.controller(function ArticleController() {
 
   ctrl.getArticle = (slug) => {
     return articleApi.getArticle({slug}).then(({article}) => {
-      ctrl.article = article;
+      ctrl.article = new Article(article);
     });
   };
 
   ctrl.getComments = (slug) => {
     return articleApi.getArticleComments({slug}).then(({comments}) => {
-      ctrl.comments = comments;
+      ctrl.article.setComments(comments);
     });
   };
 
@@ -62,17 +63,8 @@ export default Mvc.controller(function ArticleController() {
     });
   };
 
-  ctrl.setFollowed = () => {
-    if (!currentUser.isAuthenticated) {
-      return router.transitionTo('/register');
-    }
-
-    return userApi.setFollowed({
-      username: ctrl.article.author.username,
-      follow: !ctrl.article.author.following
-    }).then(({profile}) => {
-      ctrl.article.author.following = profile.following;
-    });
+  ctrl.setFollowing = () => {
+    return userController.setFollowing(ctrl.article.author);
   };
 
   ctrl.setFavorite = () => {
@@ -85,18 +77,14 @@ export default Mvc.controller(function ArticleController() {
     }
 
     return articleApi.postComment({slug: ctrl.article.slug, comment}).then(({comment}) => {
-      ctrl.comments.unshift(comment);
+      ctrl.article.addComment(comment);
       ctrl.form.clear();
     });
   };
 
   ctrl.deleteComment = (commentId) => {
     return articleApi.deleteComment({slug: ctrl.article.slug, commentId}).then(() => {
-      const index = ctrl.comments.findIndex((comment) => comment.id === commentId);
-
-      if (index !== -1) {
-        ctrl.comments.splice(index, 1);
-      }
+      ctrl.article.deleteComment(commentId);
     });
   };
 

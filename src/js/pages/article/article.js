@@ -17,8 +17,8 @@ export default class Article extends Component {
       this.props.controller.deleteArticle();
     };
 
-    this.setFollowed = () => {
-      this.props.controller.setFollowed();
+    this.setFollowing = () => {
+      this.props.controller.setFollowing();
     };
 
     this.setFavorite = () => {
@@ -59,8 +59,8 @@ export default class Article extends Component {
             'btn-secondary': article.author.following,
             'btn-outline-secondary': !article.author.following
           })}
-          onClick={this.setFollowed}
-          disabled={pending.has('setFollowed')}>
+          onClick={this.setFollowing}
+          disabled={pending.has('setFollowing')}>
           <i className="ion-plus-round" />&nbsp;
           {article.author.following ? 'Unfollow' : 'Follow'} {article.author.username}
         </button>
@@ -81,7 +81,7 @@ export default class Article extends Component {
   }
 
   render() {
-    const {article, comments, currentUser, form, deleteComment} = this.props.controller;
+    const {article, article: {comments}, currentUser, form, deleteComment} = this.props.controller;
 
     return <div className="article-page">
       <div className="banner">

@@ -10,8 +10,8 @@ export default class Articles extends Component {
   constructor() {
     super();
 
-    this.setFollowed = () => {
-      this.props.controller.setFollowed();
+    this.setFollowing = () => {
+      this.props.controller.setFollowing();
     };
   }
 

@@ -40,7 +40,7 @@ export const getProfile = ({username}) => {
   return get(`profiles/${encodeURIComponent(username)}`).then(toJson);
 };
 
-export const setFollowed = ({username, follow}) => {
+export const setFollowing = ({username, follow}) => {
   const httpFunc = follow ? post : del;
 
   return httpFunc(`profiles/${encodeURIComponent(username)}/follow`).then(toJson);

@@ -7,8 +7,8 @@ export default class Profile extends Component {
   constructor() {
     super();
 
-    this.setFollowed = () => {
-      this.props.controller.setFollowed();
+    this.setFollowing = () => {
+      this.props.controller.setFollowing();
     };
   }
 
@@ -37,7 +37,7 @@ export default class Profile extends Component {
                   'btn-secondary': profile.following,
                   'btn-outline-secondary': !profile.following
                 })}
-                onClick={this.setFollowed}
+                onClick={this.setFollowing}
                 disabled={isPending}>
                 <i className="ion-plus-round" />
                 &nbsp;
