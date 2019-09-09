@@ -5,9 +5,9 @@ import {Input} from 'crizmas-components';
 import {markdown} from 'markdown';
 import classNames from 'classnames';
 
-import ArticleAuthor from 'js/components/article-author';
-import TagList from 'js/components/tag-list';
-import {longDate} from 'js/date-utils';
+import ArticleAuthor from '../../components/article-author';
+import TagList from '../../components/tag-list';
+import {longDate} from '../../date-utils';
 
 export default class Article extends Component {
   constructor() {

@@ -1,9 +1,9 @@
 import Mvc from 'crizmas-mvc';
 import Form, {validation} from 'crizmas-form';
 
-import router from 'js/router';
-import {currentUser} from 'js/models/user';
-import userController, {usernameValidator, passwordValidator} from 'js/controllers/user';
+import router from '../../router';
+import {currentUser} from '../../models/user';
+import userController, {usernameValidator, passwordValidator} from '../../controllers/user';
 
 export default Mvc.controller(function RegisterController() {
   const ctrl = {

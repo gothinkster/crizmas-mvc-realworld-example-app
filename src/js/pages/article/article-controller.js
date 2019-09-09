@@ -1,13 +1,12 @@
 import Mvc from 'crizmas-mvc';
 import Form from 'crizmas-form';
 
-import * as articleApi from 'js/api/article';
-import * as userApi from 'js/api/user';
-import {currentUser} from 'js/models/user';
-import {Article} from 'js/models/article';
-import router from 'js/router';
-import userController from 'js/controllers/user';
-import articleController from 'js/controllers/article';
+import * as articleApi from '../../api/article';
+import {currentUser} from '../../models/user';
+import {Article} from '../../models/article';
+import router from '../../router';
+import userController from '../../controllers/user';
+import articleController from '../../controllers/article';
 
 export default Mvc.controller(function ArticleController() {
   const ctrl = {

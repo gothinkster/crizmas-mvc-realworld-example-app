@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import {Link} from 'crizmas-router';
 
-import {currentUser} from 'js/models/user';
+import {currentUser} from '../models/user';
 
 const Layout = ({router, children}) => <div>
   {router.isTransitioning && <div className="transition-overlay" />}
@@ -19,14 +19,14 @@ const Layout = ({router, children}) => <div>
             key="new-post"
             className="nav-item">
             <Link className="nav-link" to="/editor">
-              <i className="ion-compose"></i>&nbsp;New Article
+              <i className="ion-compose" />&nbsp;New Article
             </Link>
           </li>,
           <li
             key="settings"
             className="nav-item">
             <Link className="nav-link" to="/settings">
-              <i className="ion-gear-a"></i>&nbsp;Settings
+              <i className="ion-gear-a" />&nbsp;Settings
             </Link>
           </li>,
           <li

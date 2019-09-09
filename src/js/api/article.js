@@ -1,5 +1,5 @@
-import {get, post, put, del} from 'js/http';
-import {toJson, getResponseErrors} from 'js/api/utils';
+import {get, post, put, del} from '../http';
+import {toJson, getResponseErrors} from './utils';
 
 const normalizeDates = (obj) => {
   obj.createdAt = new Date(obj.createdAt);

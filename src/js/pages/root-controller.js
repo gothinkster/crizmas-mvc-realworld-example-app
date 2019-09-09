@@ -1,6 +1,6 @@
 import Mvc from 'crizmas-mvc';
 
-import userController from 'js/controllers/user';
+import userController from '../controllers/user';
 
 export default Mvc.controller(function RootController() {
   return {

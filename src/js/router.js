@@ -1,22 +1,13 @@
 import Router from 'crizmas-router';
 
-import RootRouteController from 'js/pages/root-controller';
-import Home from 'js/pages/home/home';
-import HomeRouteController from 'js/pages/home/home-controller';
-import Register from 'js/pages/register/register';
-import RegisterRouteController from 'js/pages/register/register-controller';
-import Login from 'js/pages/login/login';
-import LoginRouteController from 'js/pages/login/login-controller';
-import Settings from 'js/pages/settings/settings';
-import SettingsRouteController from 'js/pages/settings/settings-controller';
-import Profile from 'js/pages/profile/profile';
-import ProfileRouteController from 'js/pages/profile/profile-controller';
-import ProfileArticles from 'js/pages/profile/articles/articles';
-import ProfileArticlesRouteController from 'js/pages/profile/articles/articles-controller';
-import Editor from 'js/pages/editor/editor';
-import EditorRouteController from 'js/pages/editor/editor-controller';
-import Article from 'js/pages/article/article';
-import ArticleRouteController from 'js/pages/article/article-controller';
+import RootRouteController from './pages/root-controller';
+
+const resolveWith = (componentPromise, routeControllerPromise) =>
+  Promise.all([componentPromise, routeControllerPromise])
+    .then(([{default: Component}, {default: RouteController}]) => ({
+      component: Component,
+      controller: RouteController
+    }));
 
 export default new Router({
   basePath: process.env.basePath,
@@ -26,58 +17,108 @@ export default new Router({
       children: [
         Router.fallbackRoute({to: '/'}),
         {
-          component: Home,
-          controller: HomeRouteController
+          resolve: () => resolveWith(
+            import(/* webpackChunkName: 'home' */
+              './pages/home/home'),
+            import(/* webpackChunkName: 'home' */
+              './pages/home/home-controller'))
         },
         {
           path: 'register',
-          component: Register,
-          controller: RegisterRouteController
+          resolve: () => resolveWith(
+            import(/* webpackChunkName: 'register' */
+              './pages/register/register'),
+            import(/* webpackChunkName: 'register' */
+              './pages/register/register-controller'))
         },
         {
           path: 'login',
-          component: Login,
-          controller: LoginRouteController
+          resolve: () => resolveWith(
+            import(/* webpackChunkName: 'login' */
+              './pages/login/login'),
+            import(/* webpackChunkName: 'login' */
+              './pages/login/login-controller'))
         },
         {
           path: 'settings',
-          component: Settings,
-          controller: SettingsRouteController
+          resolve: () => resolveWith(
+            import(/* webpackChunkName: 'settings' */
+              './pages/settings/settings'),
+            import(/* webpackChunkName: 'settings' */
+              './pages/settings/settings-controller'))
         },
         {
           path: ':atUsername',
-          component: Profile,
-          controller: ProfileRouteController,
           children: [
-            {
-              component: ProfileArticles,
-              controller: ProfileArticlesRouteController
-            },
-            {
-              path: 'favorites',
-              component: ProfileArticles,
-              controller: ProfileArticlesRouteController
-            }
-          ]
+            {},
+            {path: 'favorites'}
+          ],
+          resolve: () => {
+            return Promise.all([
+              import(/* webpackChunkName: 'profile' */
+                './pages/profile/profile'),
+              import(/* webpackChunkName: 'profile' */
+                './pages/profile/profile-controller'),
+              import(/* webpackChunkName: 'articles' */
+                './pages/profile/articles/articles'),
+              import(/* webpackChunkName: 'articles' */
+                './pages/profile/articles/articles-controller')
+            ]).then(([
+              {default: Profile},
+              {default: ProfileRouteController},
+              {default: ProfileArticles},
+              {default: ProfileArticlesRouteController}
+            ]) => ({
+              component: Profile,
+              controller: ProfileRouteController,
+              children: [
+                {
+                  component: ProfileArticles,
+                  controller: ProfileArticlesRouteController
+                },
+                {
+                  path: 'favorites',
+                  component: ProfileArticles,
+                  controller: ProfileArticlesRouteController
+                }
+              ]
+            }));
+          }
         },
         {
           path: 'editor',
           children: [
-            {
-              component: Editor,
-              controller: EditorRouteController
-            },
-            {
-              path: ':slug',
-              component: Editor,
-              controller: EditorRouteController
-            }
-          ]
+            {},
+            {path: ':slug'}
+          ],
+          resolve: () => {
+            return Promise.all([
+              import(/* webpackChunkName: 'editor' */
+                './pages/editor/editor'),
+              import(/* webpackChunkName: 'editor' */
+                './pages/editor/editor-controller')
+            ]).then(([{default: Home}, {default: HomeRouteController}]) => ({
+              children: [
+                {
+                  component: Home,
+                  controller: HomeRouteController
+                },
+                {
+                  path: ':slug',
+                  component: Home,
+                  controller: HomeRouteController
+                }
+              ]
+            }));
+          }
         },
         {
           path: 'article/:slug',
-          component: Article,
-          controller: ArticleRouteController
+          resolve: () => resolveWith(
+            import(/* webpackChunkName: 'article' */
+              './pages/article/article'),
+            import(/* webpackChunkName: 'article' */
+              './pages/article/article-controller'))
         }
       ]
     }

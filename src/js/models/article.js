@@ -1,4 +1,4 @@
-import {User} from 'js/models/user';
+import {User} from './user';
 
 export function Article(articleData) {
   const article = {

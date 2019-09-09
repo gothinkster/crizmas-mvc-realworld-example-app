@@ -10,7 +10,7 @@ export default class Pagination extends Component {
 
   render() {
     const {totalItemsCount, offset, itemsPerPage} = this.props;
-    const pagesCount = Math.trunc(totalItemsCount / itemsPerPage) + 1;
+    const pagesCount = Math.ceil(totalItemsCount / itemsPerPage);
 
     if (pagesCount <= 1) {
       return false;

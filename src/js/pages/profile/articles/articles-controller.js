@@ -1,8 +1,8 @@
 import Mvc from 'crizmas-mvc';
 
-import * as articleApi from 'js/api/article';
-import {Article} from 'js/models/article';
-import articleController from 'js/controllers/article';
+import * as articleApi from '../../../api/article';
+import {Article} from '../../../models/article';
+import articleController from '../../../controllers/article';
 
 const tabs = {
   own: Symbol(),

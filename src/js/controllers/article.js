@@ -1,8 +1,8 @@
 import Mvc from 'crizmas-mvc';
 
-import {currentUser} from 'js/models/user';
-import * as articleApi from 'js/api/article';
-import router from 'js/router';
+import {currentUser} from '../models/user';
+import * as articleApi from '../api/article';
+import router from '../router';
 
 export default Mvc.controller({
   setFavorite: (article) => {

@@ -1,10 +1,10 @@
 import Mvc from 'crizmas-mvc';
 import {validation} from 'crizmas-form';
 
-import {setAuthToken, removeAuthToken} from 'js/http';
-import {currentUser, User} from 'js/models/user';
-import * as userApi from 'js/api/user';
-import router from 'js/router';
+import {setAuthToken, removeAuthToken} from '../http';
+import {currentUser, User} from '../models/user';
+import * as userApi from '../api/user';
+import router from '../router';
 
 export const usernameValidator = validation.validate(User.validateUsername);
 
@@ -17,9 +17,13 @@ export default Mvc.controller({
     if (token) {
       setAuthToken(token);
 
-      const {user} = await userApi.getCurrentUser();
+      try {
+        const {user} = await userApi.getCurrentUser();
 
-      currentUser.updateAuthenticated(user);
+        currentUser.updateAuthenticated(user);
+      } catch (e) {
+        clearExistingToken();
+      }
     }
   },
 
@@ -58,8 +62,7 @@ export default Mvc.controller({
 
   logout: () => {
     User.logout();
-    removeAuthToken();
-    localStorage.removeItem('token');
+    clearExistingToken();
   }
 });
 
@@ -67,4 +70,9 @@ const setAuthenticated = (userData) => {
   currentUser.updateAuthenticated(userData);
   setAuthToken(userData.token);
   localStorage.setItem('token', userData.token);
+};
+
+const clearExistingToken = () => {
+  removeAuthToken();
+  localStorage.removeItem('token');
 };

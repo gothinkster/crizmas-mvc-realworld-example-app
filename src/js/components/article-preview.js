@@ -3,8 +3,8 @@ import PropTypes from 'prop-types';
 import {Link} from 'crizmas-router';
 import classNames from 'classnames';
 
-import ArticleAuthor from 'js/components/article-author';
-import TagList from 'js/components/tag-list';
+import ArticleAuthor from './article-author';
+import TagList from './tag-list';
 
 export default class ArticlePreview extends Component {
   constructor() {

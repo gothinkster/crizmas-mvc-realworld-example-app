@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import {Link} from 'crizmas-router';
 
-import {longDate} from 'js/date-utils';
+import {longDate} from '../date-utils';
 
 const ArticleAuthor = ({article}) => <span>
   <Link to={`/@${encodeURIComponent(article.author.username)}`}>

@@ -1,10 +1,10 @@
 import Mvc from 'crizmas-mvc';
 import Form, {validation} from 'crizmas-form';
 
-import router from 'js/router';
-import {currentUser} from 'js/models/user';
-import {Article} from 'js/models/article';
-import * as articleApi from 'js/api/article';
+import router from '../../router';
+import {currentUser} from '../../models/user';
+import {Article} from '../../models/article';
+import * as articleApi from '../../api/article';
 
 export default Mvc.controller(function EditorController() {
   const ctrl = {

@@ -2,8 +2,8 @@ import React, {Component} from 'react';
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
 
-import ArticlePreview from 'js/components/article-preview';
-import Pagination from 'js/components/pagination';
+import ArticlePreview from '../../components/article-preview';
+import Pagination from '../../components/pagination';
 
 export default class Home extends Component {
   constructor() {

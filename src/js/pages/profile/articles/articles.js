@@ -3,8 +3,8 @@ import PropTypes from 'prop-types';
 import {Link} from 'crizmas-router';
 import classNames from 'classnames';
 
-import ArticlePreview from 'js/components/article-preview';
-import Pagination from 'js/components/pagination';
+import ArticlePreview from '../../../components/article-preview';
+import Pagination from '../../../components/pagination';
 
 export default class Articles extends Component {
   constructor() {

@@ -1,5 +1,5 @@
-import {get, post, put, del} from 'js/http';
-import {toJson, getResponseErrors} from 'js/api/utils';
+import {get, post, put, del} from '../http';
+import {toJson, getResponseErrors} from './utils';
 
 export const getCurrentUser = () => {
   return get('user').then(toJson);
