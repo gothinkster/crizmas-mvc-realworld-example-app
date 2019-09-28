@@ -2,12 +2,10 @@ import Router from 'crizmas-router';
 
 import RootRouteController from './pages/root-controller';
 
-const resolveWith = (componentPromise, routeControllerPromise) =>
-  Promise.all([componentPromise, routeControllerPromise])
-    .then(([{default: Component}, {default: RouteController}]) => ({
-      component: Component,
-      controller: RouteController
-    }));
+const resolveWith = async (componentPromise, routeControllerPromise) => ({
+  component: (await componentPromise).default,
+  controller: (await routeControllerPromise).default
+});
 
 export default new Router({
   basePath: process.env.basePath,
@@ -18,34 +16,26 @@ export default new Router({
         Router.fallbackRoute({to: '/'}),
         {
           resolve: () => resolveWith(
-            import(/* webpackChunkName: 'home' */
-              './pages/home/home'),
-            import(/* webpackChunkName: 'home' */
-              './pages/home/home-controller'))
+            import(/* webpackChunkName: 'home' */ './pages/home/home'),
+            import(/* webpackChunkName: 'home' */ './pages/home/home-controller'))
         },
         {
           path: 'register',
           resolve: () => resolveWith(
-            import(/* webpackChunkName: 'register' */
-              './pages/register/register'),
-            import(/* webpackChunkName: 'register' */
-              './pages/register/register-controller'))
+            import(/* webpackChunkName: 'register' */ './pages/register/register'),
+            import(/* webpackChunkName: 'register' */ './pages/register/register-controller'))
         },
         {
           path: 'login',
           resolve: () => resolveWith(
-            import(/* webpackChunkName: 'login' */
-              './pages/login/login'),
-            import(/* webpackChunkName: 'login' */
-              './pages/login/login-controller'))
+            import(/* webpackChunkName: 'login' */ './pages/login/login'),
+            import(/* webpackChunkName: 'login' */ './pages/login/login-controller'))
         },
         {
           path: 'settings',
           resolve: () => resolveWith(
-            import(/* webpackChunkName: 'settings' */
-              './pages/settings/settings'),
-            import(/* webpackChunkName: 'settings' */
-              './pages/settings/settings-controller'))
+            import(/* webpackChunkName: 'settings' */ './pages/settings/settings'),
+            import(/* webpackChunkName: 'settings' */ './pages/settings/settings-controller'))
         },
         {
           path: ':atUsername',
@@ -53,37 +43,32 @@ export default new Router({
             {},
             {path: 'favorites'}
           ],
-          resolve: () => {
-            return Promise.all([
-              import(/* webpackChunkName: 'profile' */
-                './pages/profile/profile'),
-              import(/* webpackChunkName: 'profile' */
-                './pages/profile/profile-controller'),
-              import(/* webpackChunkName: 'articles' */
-                './pages/profile/articles/articles'),
-              import(/* webpackChunkName: 'articles' */
-                './pages/profile/articles/articles-controller')
-            ]).then(([
-              {default: Profile},
-              {default: ProfileRouteController},
-              {default: ProfileArticles},
-              {default: ProfileArticlesRouteController}
-            ]) => ({
-              component: Profile,
-              controller: ProfileRouteController,
-              children: [
-                {
-                  component: ProfileArticles,
-                  controller: ProfileArticlesRouteController
-                },
-                {
-                  path: 'favorites',
-                  component: ProfileArticles,
-                  controller: ProfileArticlesRouteController
-                }
-              ]
-            }));
-          }
+          resolve: () => Promise.all([
+            import(/* webpackChunkName: 'profile' */ './pages/profile/profile'),
+            import(/* webpackChunkName: 'profile' */ './pages/profile/profile-controller'),
+            import(/* webpackChunkName: 'articles' */ './pages/profile/articles/articles'),
+            import(/* webpackChunkName: 'articles' */
+              './pages/profile/articles/articles-controller')
+          ]).then(([
+            {default: Profile},
+            {default: ProfileRouteController},
+            {default: ProfileArticles},
+            {default: ProfileArticlesRouteController}
+          ]) => ({
+            component: Profile,
+            controller: ProfileRouteController,
+            children: [
+              {
+                component: ProfileArticles,
+                controller: ProfileArticlesRouteController
+              },
+              {
+                path: 'favorites',
+                component: ProfileArticles,
+                controller: ProfileArticlesRouteController
+              }
+            ]
+          }))
         },
         {
           path: 'editor',
@@ -91,34 +76,28 @@ export default new Router({
             {},
             {path: ':slug'}
           ],
-          resolve: () => {
-            return Promise.all([
-              import(/* webpackChunkName: 'editor' */
-                './pages/editor/editor'),
-              import(/* webpackChunkName: 'editor' */
-                './pages/editor/editor-controller')
-            ]).then(([{default: Home}, {default: HomeRouteController}]) => ({
-              children: [
-                {
-                  component: Home,
-                  controller: HomeRouteController
-                },
-                {
-                  path: ':slug',
-                  component: Home,
-                  controller: HomeRouteController
-                }
-              ]
-            }));
-          }
+          resolve: () => Promise.all([
+            import(/* webpackChunkName: 'editor' */ './pages/editor/editor'),
+            import(/* webpackChunkName: 'editor' */ './pages/editor/editor-controller')
+          ]).then(([{default: Home}, {default: HomeRouteController}]) => ({
+            children: [
+              {
+                component: Home,
+                controller: HomeRouteController
+              },
+              {
+                path: ':slug',
+                component: Home,
+                controller: HomeRouteController
+              }
+            ]
+          }))
         },
         {
           path: 'article/:slug',
           resolve: () => resolveWith(
-            import(/* webpackChunkName: 'article' */
-              './pages/article/article'),
-            import(/* webpackChunkName: 'article' */
-              './pages/article/article-controller'))
+            import(/* webpackChunkName: 'article' */ './pages/article/article'),
+            import(/* webpackChunkName: 'article' */ './pages/article/article-controller'))
         }
       ]
     }
