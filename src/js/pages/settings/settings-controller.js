@@ -3,7 +3,7 @@ import Form, {validation} from 'crizmas-form';
 
 import router from '../../router';
 import {currentUser} from '../../models/user';
-import userController, {usernameValidator, passwordValidator} from '../../controllers/user';
+import userController, {getUsernameValidator, getPasswordValidator} from '../../controllers/user';
 
 export default Mvc.controller(function SettingsController() {
   const ctrl = {
@@ -32,7 +32,7 @@ export default Mvc.controller(function SettingsController() {
         {
           name: 'username',
           initialValue: currentUser.username,
-          validate: validation(validation.required(), usernameValidator)
+          validate: validation(validation.required(), getUsernameValidator())
         },
         {
           name: 'bio',
@@ -45,7 +45,7 @@ export default Mvc.controller(function SettingsController() {
         },
         {
           name: 'password',
-          validate: passwordValidator
+          validate: getPasswordValidator()
         }
       ],
 

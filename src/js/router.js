@@ -79,16 +79,16 @@ export default new Router({
           resolve: () => Promise.all([
             import(/* webpackChunkName: 'editor' */ './pages/editor/editor'),
             import(/* webpackChunkName: 'editor' */ './pages/editor/editor-controller')
-          ]).then(([{default: Home}, {default: HomeRouteController}]) => ({
+          ]).then(([{default: Editor}, {default: EditorRouteController}]) => ({
             children: [
               {
-                component: Home,
-                controller: HomeRouteController
+                component: Editor,
+                controller: EditorRouteController
               },
               {
                 path: ':slug',
-                component: Home,
-                controller: HomeRouteController
+                component: Editor,
+                controller: EditorRouteController
               }
             ]
           }))

@@ -6,9 +6,9 @@ import {currentUser, User} from '../models/user';
 import * as userApi from '../api/user';
 import router from '../router';
 
-export const usernameValidator = validation.validate(User.validateUsername);
+export const getUsernameValidator = () => validation.validate(User.validateUsername);
 
-export const passwordValidator = validation.validate(User.validatePassword, {events: ['blur']});
+export const getPasswordValidator = () => validation.validate(User.validatePassword, {events: ['blur']});
 
 export default Mvc.controller({
   checkAuthenticated: async () => {
