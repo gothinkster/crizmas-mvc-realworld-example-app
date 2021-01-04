@@ -1,0 +1,9 @@
+server {
+  listen 8799;
+  root "/home/sebi/projects/github/crizmas-mvc-realworld-example-app/dist";
+  gzip_types *;
+
+  location / {
+    try_files $uri $uri/index.html /;
+  }
+}
