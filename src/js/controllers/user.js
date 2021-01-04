@@ -1,16 +1,18 @@
-import Mvc from 'crizmas-mvc';
-import {validation} from 'crizmas-form';
+import {controller} from 'crizmas-mvc';
+import {validate} from 'crizmas-form';
 
 import {setAuthToken, removeAuthToken} from '../http';
 import {currentUser, User} from '../models/user';
 import * as userApi from '../api/user';
 import router from '../router';
 
-export const getUsernameValidator = () => validation.validate(User.validateUsername);
+export const getUsernameValidator = () =>
+  validate(({input}) => User.validateUsername(input.getValue()));
 
-export const getPasswordValidator = () => validation.validate(User.validatePassword, {events: ['blur']});
+export const getPasswordValidator = () =>
+  validate(({input}) => User.validatePassword(input.getValue()));
 
-export default Mvc.controller({
+export default controller({
   checkAuthenticated: async () => {
     const token = localStorage.getItem('token');
 

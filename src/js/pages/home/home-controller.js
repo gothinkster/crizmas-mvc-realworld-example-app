@@ -1,4 +1,4 @@
-import Mvc from 'crizmas-mvc';
+import {controller} from 'crizmas-mvc';
 
 import * as articleApi from '../../api/article';
 import * as tagsApi from '../../api/tags';
@@ -12,7 +12,7 @@ const tabs = {
   tag: Symbol()
 };
 
-export default Mvc.controller(function HomeController() {
+export default controller(function HomeController() {
   const ctrl = {
     articlesOffset: 0,
     articlesLimit: 10,

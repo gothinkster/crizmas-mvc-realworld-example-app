@@ -1,10 +1,10 @@
-import Mvc from 'crizmas-mvc';
+import {controller} from 'crizmas-mvc';
 
 import {currentUser} from '../models/user';
 import * as articleApi from '../api/article';
 import router from '../router';
 
-export default Mvc.controller({
+export default controller({
   setFavorite: (article) => {
     if (!currentUser.isAuthenticated) {
       router.transitionTo('/register');

@@ -1,11 +1,11 @@
-import Mvc from 'crizmas-mvc';
+import {controller} from 'crizmas-mvc';
 
 import router from '../../router';
 import * as userApi from '../../api/user';
 import {currentUser, User} from '../../models/user';
 import userController from '../../controllers/user';
 
-export default Mvc.controller(function ProfileController() {
+export default controller(function ProfileController() {
   const ctrl = {
     username: null,
     profile: null,

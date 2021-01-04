@@ -1,4 +1,4 @@
-import Mvc from 'crizmas-mvc';
+import {controller} from 'crizmas-mvc';
 
 import * as articleApi from '../../../api/article';
 import {Article} from '../../../models/article';
@@ -9,7 +9,7 @@ const tabs = {
   favorite: Symbol()
 };
 
-export default Mvc.controller(function ArticlesController() {
+export default controller(function ArticlesController() {
   const ctrl = {
     username: null,
     articlesOffset: 0,

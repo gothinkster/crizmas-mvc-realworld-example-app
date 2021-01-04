@@ -3,7 +3,7 @@
 const path = require('path');
 const webpack = require('webpack');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
-const CleanWebpackPlugin = require('clean-webpack-plugin');
+const {CleanWebpackPlugin} = require('clean-webpack-plugin');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
 
 const DefinePlugin = webpack.DefinePlugin;
@@ -20,16 +20,27 @@ module.exports = {
     publicPath: '/',
     filename: '[name].bundle-[hash].js'
   },
+  optimization: {
+    splitChunks: {
+      minSize: 5000
+    }
+  },
+  resolve: {
+    extensions: ['.js', '.jsx']
+  },
   module: {
     rules: [
+      {
+        include: /(crizmas-|smart-mix)/,
+        sideEffects: false
+      },
       {
         test: /\.jsx?$/,
         exclude: /node_modules/,
         use: {
           loader: 'babel-loader',
           options: {
-            presets: ['@babel/preset-react'],
-            plugins: ['@babel/plugin-syntax-dynamic-import']
+            presets: ['@babel/preset-react']
           }
         }
       }
@@ -51,9 +62,11 @@ module.exports = {
     new CleanWebpackPlugin(),
     ...isProduction
       ? [
-        new CopyWebpackPlugin([
-          {from: 'src/css', to: 'css'}
-        ])
+        new CopyWebpackPlugin({
+          patterns: [
+            {from: 'src/css', to: 'css'}
+          ]
+        })
       ]
       : []
   ],

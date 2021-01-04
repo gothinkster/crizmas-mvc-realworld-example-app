@@ -1,12 +1,12 @@
-import Mvc from 'crizmas-mvc';
-import Form, {validation} from 'crizmas-form';
+import {controller} from 'crizmas-mvc';
+import Form, {required} from 'crizmas-form';
 
 import router from '../../router';
 import {currentUser} from '../../models/user';
 import {Article} from '../../models/article';
 import * as articleApi from '../../api/article';
 
-export default Mvc.controller(function EditorController() {
+export default controller(function EditorController() {
   const ctrl = {
     isNew: false,
     form: null,
@@ -44,7 +44,7 @@ export default Mvc.controller(function EditorController() {
         {
           name: 'title',
           initialValue: ctrl.article && ctrl.article.title,
-          validate: validation.required()
+          validate: required()
         },
         {
           name: 'description',
@@ -53,7 +53,7 @@ export default Mvc.controller(function EditorController() {
         {
           name: 'body',
           initialValue: ctrl.article && ctrl.article.body,
-          validate: validation.required()
+          validate: required()
         },
         {
           name: 'tagString',

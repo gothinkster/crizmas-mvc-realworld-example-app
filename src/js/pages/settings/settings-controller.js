@@ -1,11 +1,11 @@
-import Mvc from 'crizmas-mvc';
-import Form, {validation} from 'crizmas-form';
+import {controller} from 'crizmas-mvc';
+import Form, {validation, required} from 'crizmas-form';
 
 import router from '../../router';
 import {currentUser} from '../../models/user';
 import userController, {getUsernameValidator, getPasswordValidator} from '../../controllers/user';
 
-export default Mvc.controller(function SettingsController() {
+export default controller(function SettingsController() {
   const ctrl = {
     userController,
     form: null,
@@ -32,7 +32,7 @@ export default Mvc.controller(function SettingsController() {
         {
           name: 'username',
           initialValue: currentUser.username,
-          validate: validation(validation.required(), getUsernameValidator())
+          validate: validation(required(), getUsernameValidator())
         },
         {
           name: 'bio',
@@ -41,7 +41,7 @@ export default Mvc.controller(function SettingsController() {
         {
           name: 'email',
           initialValue: currentUser.email,
-          validate: validation.required()
+          validate: required()
         },
         {
           name: 'password',
