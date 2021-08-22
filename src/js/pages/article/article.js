@@ -2,7 +2,7 @@ import React, {Component} from 'react';
 import PropTypes from 'prop-types';
 import {Link} from 'crizmas-router';
 import {Input} from 'crizmas-components';
-import {markdown} from 'markdown';
+import marked from 'marked';
 import classNames from 'classnames';
 
 import ArticleAuthor from '../../components/article-author';
@@ -95,7 +95,7 @@ export default class Article extends Component {
       <div className="container page">
         <div className="row article-content">
           <div className="col-md-12">
-            <div dangerouslySetInnerHTML={{__html: markdown.toHTML(article.body)}} />
+            <div dangerouslySetInnerHTML={{__html: marked(article.body)}} />
             <TagList article={article} />
           </div>
         </div>

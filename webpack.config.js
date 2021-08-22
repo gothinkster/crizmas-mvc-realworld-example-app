@@ -3,7 +3,6 @@
 const path = require('path');
 const webpack = require('webpack');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
-const {CleanWebpackPlugin} = require('clean-webpack-plugin');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
 
 const DefinePlugin = webpack.DefinePlugin;
@@ -18,7 +17,8 @@ module.exports = {
   output: {
     path: path.resolve(__dirname, 'dist'),
     publicPath: '/',
-    filename: '[name].bundle-[hash].js'
+    filename: '[name].bundle-[contenthash].js',
+    clean: true
   },
   optimization: {
     splitChunks: {
@@ -36,13 +36,16 @@ module.exports = {
       },
       {
         test: /\.jsx?$/,
-        exclude: /node_modules/,
-        use: {
-          loader: 'babel-loader',
-          options: {
-            presets: ['@babel/preset-react']
+        // normalization needed for windows
+        include: path.normalize(`${__dirname}/src`),
+        use: [
+          {
+            loader: 'babel-loader',
+            options: {
+              presets: ['@babel/react'],
+            }
           }
-        }
+        ]
       }
     ]
   },
@@ -59,7 +62,6 @@ module.exports = {
         basePath: JSON.stringify(null)
       }
     }),
-    new CleanWebpackPlugin(),
     ...isProduction
       ? [
         new CopyWebpackPlugin({
@@ -71,8 +73,10 @@ module.exports = {
       : []
   ],
   devServer: {
-    contentBase: 'src',
     port: 5556,
+    static: {
+      directory: 'dist'
+    },
     historyApiFallback: {
       index: '/'
     }
